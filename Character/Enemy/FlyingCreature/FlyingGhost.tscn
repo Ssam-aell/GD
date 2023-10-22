@@ -1,13 +1,11 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Character/Enemy/Enemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_3.png" type="Texture" id=2]
-[ext_resource path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_2.png" type="Texture" id=3]
-[ext_resource path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_1.png" type="Texture" id=4]
+[ext_resource path="res://Assets/395038831_223051020625253_6463408959390328834_n.png" type="Texture" id=2]
+[ext_resource path="res://Character/Enemy/FlyingCreature/FlyingGhost.gd" type="Script" id=3]
 [ext_resource path="res://Character/Enemy/FlyingCreature/FlyingCreatureFSM.gd" type="Script" id=5]
 [ext_resource path="res://Assets/Free Smoke Fx Pixel 2/Free Smoke Fx  Pixel 06.png" type="Texture" id=6]
 [ext_resource path="res://Character/Hitbox.gd" type="Script" id=7]
-[ext_resource path="res://Character/Enemy/FlyingCreature/FlyingCreature.gd" type="Script" id=8]
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 6 )
@@ -25,6 +23,22 @@ region = Rect2( 576, 448, 64, 64 )
 atlas = ExtResource( 6 )
 region = Rect2( 640, 448, 64, 64 )
 
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
@@ -32,17 +46,17 @@ animations = [ {
 "name": "dead",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ],
+"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="CircleShape2D" id=2]
-radius = 5.0
+[sub_resource type="CircleShape2D" id=18]
+radius = 14.0
 
-[sub_resource type="CircleShape2D" id=11]
-radius = 6.0
+[sub_resource type="CircleShape2D" id=17]
+radius = 16.0
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -175,7 +189,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2 ]
+"values": [ 1, 2, 3 ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -217,20 +231,21 @@ tracks/2/keys = {
 "values": [ true, false ]
 }
 
-[node name="FlyingCreature" instance=ExtResource( 1 )]
-script = ExtResource( 8 )
+[node name="FlyingGhost" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
 acceleration = 10
-max_speed = 30
+max_speed = 20
 
 [node name="FiniteStateMachine" parent="." index="0"]
 script = ExtResource( 5 )
 
 [node name="AnimatedSprite" parent="." index="1"]
+position = Vector2( 0, -9.53674e-07 )
+scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" parent="." index="2"]
-visible = false
-shape = SubResource( 2 )
+shape = SubResource( 18 )
 
 [node name="Hitbox" type="Area2D" parent="." index="3"]
 collision_layer = 0
@@ -238,8 +253,7 @@ collision_mask = 2
 script = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" index="0"]
-visible = false
-shape = SubResource( 11 )
+shape = SubResource( 17 )
 
 [node name="AnimationPlayer" parent="." index="4"]
 anims/RESET = SubResource( 3 )
