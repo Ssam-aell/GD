@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "Character",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://Enemy.gd"
+"path": "res://Character/Enemy/Enemy.gd"
 }, {
 "base": "Node",
 "class": "FiniteStateMachine",
